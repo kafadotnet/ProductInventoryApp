@@ -7,7 +7,9 @@ public class Product
 
     public string ProductName { get; set; } = null!;
 
-    public string ProductSpecification { get; set; } = null!;
+    public string? ProductSpecification { get; set; } = null!;
 
     public decimal ProductPrice { get; set; }
+
+    public Category ProductCategory { get; set; } = null!;
 }
