@@ -10,7 +10,7 @@ public interface IProductService<T, TFeedback> where T : class where TFeedback :
 
     FeedbackStatus<TFeedback> GetSingleProduct(String id);
 
-    FeedbackStatus<TFeedback> UpdateProduct(string id, T updatedProduct);
+    FeedbackStatus<TFeedback> UpdateProduct(T updatedProduct);
 
     FeedbackStatus<TFeedback> DeleteProduct(String id);
 }

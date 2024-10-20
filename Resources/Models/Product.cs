@@ -11,5 +11,5 @@ public class Product
 
     public decimal ProductPrice { get; set; }
 
-    public Category ProductCategory { get; set; } = null!;
+    public Category ProductCategory { get; set; } = new();
 }

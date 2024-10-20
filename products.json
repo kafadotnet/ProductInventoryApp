@@ -1,21 +1,10 @@
 [
   {
-    "Id": "56848eb1-47eb-4945-993e-098cefc636c0",
+    "Id": "36b331c7-b65c-4976-a678-b8d0d0c9cee3",
     "ProductName": "Panasonic TV",
     "ProductSpecification": "OLED GZ5500 Model High image resolution",
     "ProductPrice": 16500.0,
     "ProductCategory": {
-      "Id": "f9ceb192-4e75-41ce-a1a1-81db9a3c5d27",
-      "Name": "Electronics"
-    }
-  },
-  {
-    "Id": "b76e0446-d1bf-42fe-abab-d9030f33cef6",
-    "ProductName": "Panasonic TV",
-    "ProductSpecification": "OLED GZ5500 Model High image resolution",
-    "ProductPrice": 16500.0,
-    "ProductCategory": {
-      "Id": "4f5b786c-6f56-46f6-8ab7-41c10d92c154",
       "Name": "Electronics"
     }
   }

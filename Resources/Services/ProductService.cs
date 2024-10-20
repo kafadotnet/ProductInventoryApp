@@ -10,11 +10,11 @@ public class ProductService : IProductService<Product, Product>
     private readonly IFileService _fileService;
     private List<Product> _products;
 
-    public ProductService(string filePath)
+    public ProductService(IFileService fileService)
     {
-        _fileService = new FileService(filePath);
-        _products = new List<Product>();
-        GetAllProducts();
+        _fileService = fileService;
+        _products = GetAllProducts().Feedback!.ToList(); 
+        
     }
 
 
@@ -23,6 +23,14 @@ public class ProductService : IProductService<Product, Product>
     {
         try
         {
+            GetAllProducts();
+            var exists = _products.FirstOrDefault(p => p.ProductName.ToLower() == product.ProductName.ToLower()); 
+            
+            if (exists != null)
+            {
+                return new FeedbackStatus<Product> { Succeeded = false, Message = "Product already exists!" };
+            }
+
             _products.Add(product);
 
             var feedback = SaveToFile();
@@ -47,11 +55,12 @@ public class ProductService : IProductService<Product, Product>
         try
         {
             var feedback = _fileService.LoadFromFile();
+            string content = feedback.Feedback!.ToString();
 
-            if (feedback.Succeeded)
+            if (feedback.Succeeded && !string.IsNullOrEmpty(content))
             {
-                _products = JsonConvert.DeserializeObject<List<Product>>(feedback.Feedback!)!;
-                return new FeedbackStatus<IEnumerable<Product>> { Succeeded = true, Feedback = _products };
+                var products = JsonConvert.DeserializeObject<List<Product>>(content);
+                return new FeedbackStatus<IEnumerable<Product>> { Succeeded = true, Feedback = products };
             }
             else
             {
@@ -80,9 +89,22 @@ public class ProductService : IProductService<Product, Product>
     }
 
     //Update Product
-    public FeedbackStatus<Product> UpdateProduct(string id, Product updatedProduct)
+    public FeedbackStatus<Product> UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        var existingProduct = _products.FirstOrDefault(p => p.Id == product.Id);
+        if (existingProduct != null)
+        {
+            var index = _products.IndexOf(existingProduct);
+            _products[index] = product;
+            SaveToFile();
+
+            return new FeedbackStatus<Product> { Succeeded = true  };
+        }
+        else
+        {
+            return new FeedbackStatus<Product> { Succeeded = false };
+
+        }
     }
 
     //Delete Product
